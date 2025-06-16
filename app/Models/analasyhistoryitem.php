@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class AnalasyHistoryItem extends Model
 {
     use HasFactory;
-    protected $table = 'analasy_history_item';
+    protected $table = 'analasy_history_items';
     protected $fillable = [
         'id_analasy_history',
         'json',
