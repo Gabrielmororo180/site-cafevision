@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AnalasyHistory;
+use App\Models\AnalasyHistoryItem;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 class AnalasyController extends Controller
@@ -16,22 +17,29 @@ class AnalasyController extends Controller
         $data = $request->all();
 
    
-   if ($request->hasFile('image_1')) {
-        $file = $request->file('image_1');
-
-        
-         $timestamp = Carbon::now()->format('Ymd_His_v'); // Exemplo: 20250524_152130_123
-        $extension = $file->getClientOriginalExtension();
-        $filename = $timestamp . '.' . $extension;
-
-        // Salva no disco public/images
-        $file->storeAs('public/images', $filename);
-
-        $data['image_1'] = $filename;
+   foreach (['image_1', 'image_2', 'image_3'] as $imageField) {
+        if ($request->hasFile($imageField)) {
+            $file = $request->file($imageField);
+            
+            $timestamp = Carbon::now()->format('Ymd_His_v');
+            $filename = "{$imageField}_{$timestamp}." . $file->getClientOriginalExtension();
+            
+            $file->storeAs('images', $filename, 'public');
+            
+            $data[$imageField] = $filename;
+        }
     }
 
+     $analasy = AnalasyHistory::create($data);
+
+     
+     if (isset($data['json_api']) && is_string($data['json_api'])) {
+        $data['json_api'] = json_decode($data['json_api'], true);
+    }
+
+
     // Cria o registro no banco
-    $analasy = AnalasyHistory::create($data);
+   
 
     return response()->json($analasy, 201);
     }
