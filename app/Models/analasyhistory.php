@@ -31,4 +31,10 @@ class AnalasyHistory extends Model
     protected $casts = [
         'json_api' => 'array',
     ];
+
+    public function items()
+    {
+        return $this->hasMany(\App\Models\AnalasyHistoryItem::class, 'id_analasy_history');
+    }
+
 }

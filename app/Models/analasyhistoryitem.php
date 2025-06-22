@@ -21,4 +21,8 @@ class AnalasyHistoryItem extends Model
         'num',
     ];
 
+    public function history()
+{
+    return $this->belongsTo(AnalasyHistory::class, 'id_analasy_history');
+}
 }

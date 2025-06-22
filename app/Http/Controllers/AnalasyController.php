@@ -17,12 +17,18 @@ class AnalasyController extends Controller
     $data = $request->all();
 
     // Salva imagens
-    foreach (['image_1', 'image_2', 'image_3'] as $imageField) {
+   foreach (['image_1', 'image_2', 'image_3'] as $imageField) {
         if ($request->hasFile($imageField)) {
             $file = $request->file($imageField);
+
+            // Gera nome único baseado no timestamp
             $timestamp = Carbon::now()->format('Ymd_His_v');
             $filename = "{$imageField}_{$timestamp}." . $file->getClientOriginalExtension();
+
+            // Salva em storage/app/public/images
             $file->storeAs('images', $filename, 'public');
+
+            // Armazena o nome no array de dados (ex: para salvar no banco)
             $data[$imageField] = $filename;
         }
     }

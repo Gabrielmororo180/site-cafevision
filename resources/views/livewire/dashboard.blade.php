@@ -3,18 +3,19 @@
       <div class="flex flex-col justify-between gap-8 mb-4 md:flex-row md:items-center">
         <div>
           <h5 class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-            Recent analysis
+            Análises recentes
           </h5>
           <p class="block mt-1 font-sans text-base antialiased font-normal leading-relaxed text-gray-700">
-            These are details about the last analysis
+            Aqui você pode observar se as amostras foram aprovadas ou reprovadas com seus respectivos percentuais da quantidade dos tipos de cerejas
           </p>
 
-            <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+            
+        </div>
+        <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
                 <a  x-data x-on:click="$dispatch('open-modal', {  name: 'configuration' })"  type="button"
                     class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                    Configura Prod.</a>
+                    Configurar percentual de qualidade</a>
             </div>
-        </div>
       </div>
     </div>
       <div class="mt-8 flow-root">
@@ -30,25 +31,25 @@
                                 <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">ID</p>
                                 </th>
                                 <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Date</p>
+                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Data</p>
                                 </th>
                                 <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
                                 <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Status</p>
                                 </th>
                                 <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Unripe</p>
+                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">{{ __('Unripe') }}%</p>
                                 </th>
                                 <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Semi Ripe</p>
+                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">{{ __('Semi Ripe') }}%</p>
                                 </th>
                                 <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Ripe</p>
+                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">{{ __('Ripe') }}%</p>
                                 </th>
                                 <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Overripe</p>
+                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">{{ __('Overripe') }}%</p>
                                 </th>
                                 <th class="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50">
-                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">Dry</p>
+                                <p class="block font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70">{{ __('Dry') }}%</p>
                                 </th>
                             </tr>
                             </thead>
@@ -62,7 +63,7 @@
                                 </td>
                                 <td class="p-4 border-b border-blue-gray-50">
                                 <p class="block font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900">
-                                    {{ htmlspecialchars($analysis['created_at']) }} 
+                                    {{ $analysis->created_at->format('d/m/Y H:i') }}
                                 </p>
                                 </td>
                                 <td class="p-4 border-b border-blue-gray-50">
@@ -102,6 +103,15 @@
                                     {{ $analysis['dry'] }} 
                                 </p>
                                 </td>
+                                <td class="p-4 border-b border-blue-gray-50">
+                                    
+
+                                    <a href="{{ route('viewanalasy', ['id' => $analysis['id']]) }}">
+                                        <button class="mt-2 px-3 py-1 text-white bg-blue-500 rounded hover:bg-blue-600">
+                                            Ver Análise
+                                        </button>
+                                    </a>
+                                 </td>
                             </tr>
                             @endforeach
                             </tbody>
